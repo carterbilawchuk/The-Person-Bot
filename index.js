@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 require("dotenv").config()
-
 const generateImage = require("./generateImage")
 
 //intents
@@ -19,27 +18,21 @@ const client = new Discord.Client({
     ]
 });
 
-//ready log
-client.on("ready", () => {
-    console.log("Logged in as " + client.user.tag);
-});
+let bot = {
+    client,
+    prefix: "-",
+    owners: ["842180919229808691", "958818784490180638"]
+}
 
-client.on("messageCreate", (message) => {
-    if(message.content.toLowerCase() == "hi")
-    {
-        message.reply("Hello!");
-    }
-})
+client.commands = new Discord.Collection()
+client.events = new Discord.Collection()
 
-const welcomeChannelId = "958521046594625556";
+client.loadEvents = (bot, reload) => require("./handlers/events")(bot, reload)
+client.loadCommands = (bot, reload) => require("./handlers/commands")(bot, reload)
 
-client.on("guildMemberAdd", async (member) => {
-    const img = await generateImage(member);
-    member.guild.channels.cache.get(welcomeChannelId).send({
-        content: `Hey, <@${member.id}> Welcome to The Place!`,
-        files: [img]
-    });
-})
+client.loadEvents(bot, false)
+client.loadCommands(bot, false)
 
+module.exports = bot
 
 client.login(process.env.token);
