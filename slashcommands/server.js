@@ -13,6 +13,6 @@ const run = async (client, interaction) => {
 module.exports = {
 	name: "server",
 	description: "Get some info about this amazing server",
-    perms: "KICK_MEMBERS",
+    perms: "",
 	run,
 }
