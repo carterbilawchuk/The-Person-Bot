@@ -3,6 +3,7 @@ require("dotenv").config()
 const generateImage = require("./generateImage")
 const fs = require("fs")
 const membercounter = require("./counters/membercounter")
+const { Player } = require("discord-player")
 
 
 //intents
@@ -19,6 +20,7 @@ const client = new Discord.Client({
         "GUILD_MEMBERS",
         "GUILD_MESSAGE_REACTIONS",
         "GUILD_BANS",
+        "GUILD_VOICE_STATES",
     ]
 });
 
@@ -27,6 +29,13 @@ let bot = {
     prefix: "-",
     owners: ["842180919229808691", "958818784490180638"]
 }
+
+client.player = new Player(client, {
+    ytdlOptions: {
+        quality: "highestaudio",
+        highWaterMark: 1 << 25
+    }
+})
 
 
 const welcomeChannelId = "958521046594625556"
