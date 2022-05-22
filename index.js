@@ -86,4 +86,6 @@ client.on("interactionCreate", (interaction) => {
     slashcmd.run(client, interaction)
 })
 
+
+
 client.login(process.env.token);
